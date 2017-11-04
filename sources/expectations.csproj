@@ -67,11 +67,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\dependencies\m3pd-agency\sources\agency.csproj">
-      <Project>{36AF877A-14FF-404E-97AA-267BDEE6B6D6}</Project>
+      <Project>{36af877a-14ff-404e-97aa-267bdee6b6d6}</Project>
       <Name>agency</Name>
     </ProjectReference>
     <ProjectReference Include="..\dependencies\m3pd-common\sources\common.csproj">
-      <Project>{D58F3584-7827-4080-94BE-EBF7DD818BD5}</Project>
+      <Project>{d58f3584-7827-4080-94be-ebf7dd818bd5}</Project>
       <Name>common</Name>
     </ProjectReference>
     <ProjectReference Include="..\dependencies\optional\sources\optional.csproj">
