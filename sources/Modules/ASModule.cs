@@ -20,15 +20,26 @@ namespace rharel.M3PD.Expectations.Modules
     /// candidate.
     /// </para>
     /// <para>
-    /// /// This module requires the information state to support the following
+    /// This module requires the information state to support the following
     /// components:
-    /// 1. Type: <see cref="SocialContext"/>; 
-    ///    Identifier: 'rharel.M3PD.Expectations.State.SocialContext'.
-    ///    This is expected to be constant throughout the interaction.
+    /// 1. Type: <see cref="SocialContext"/>
+    ///    Identifier: <see cref="SOCIAL_CONTEXT_COMPONENT_ID"/>
     /// </para>
     /// </remarks>
     public sealed class ASModule: Agency.Modules.ASModule
     {
+        /// <summary>
+        /// The <see cref="SocialContext"/> state component identifier.
+        /// </summary>
+        /// <remarks>
+        /// This component is expected to remain constant throughout the 
+        /// interaction
+        /// </remarks>
+        public static readonly string SOCIAL_CONTEXT_COMPONENT_ID = (
+            $"{typeof(ASModule).AssemblyQualifiedName}::" +
+            $"{nameof(SocialContext)}"
+        );
+
         /// <summary>
         /// Selects of one winner out of a set of candidate moves.
         /// </summary>
@@ -86,7 +97,7 @@ namespace rharel.M3PD.Expectations.Modules
         public override void Setup()
         {
             var context = State.Get<SocialContext>(
-                "rharel.M3PD.Expectations.State.SocialContext"
+                SOCIAL_CONTEXT_COMPONENT_ID
             );
             _self_id = context.SelfID;
             _interaction = context.Interaction;

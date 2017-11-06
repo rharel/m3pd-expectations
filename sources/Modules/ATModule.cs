@@ -33,6 +33,18 @@ namespace rharel.M3PD.Expectations.Modules
     public sealed class ATModule: Agency.Modules.ATModule
     {
         /// <summary>
+        /// The <see cref="SocialContext"/> state component identifier.
+        /// </summary>
+        /// <remarks>
+        /// This component is expected to remain constant throughout the 
+        /// interaction
+        /// </remarks>
+        public static readonly string SOCIAL_CONTEXT_COMPONENT_ID = (
+            $"{typeof(ATModule).AssemblyQualifiedName}::" +
+            $"{nameof(SocialContext)}"
+        );
+
+        /// <summary>
         /// Creates a new module with the specified interruption rules.
         /// </summary>
         /// <param name="interruption_rules">
@@ -69,7 +81,7 @@ namespace rharel.M3PD.Expectations.Modules
         public override void Setup()
         {
             var context = State.Get<SocialContext>(
-                "rharel.M3PD.Expectations.State.SocialContext"
+                SOCIAL_CONTEXT_COMPONENT_ID
             );
             _self_id = context.SelfID;
             _interaction = context.Interaction;
