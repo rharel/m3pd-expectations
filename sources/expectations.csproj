@@ -58,6 +58,7 @@
     <Compile Include="Modules\ASModule.cs" />
     <Compile Include="Modules\ATModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="State\CommonComponentIDs.cs" />
     <Compile Include="State\SocialContext.cs" />
     <Compile Include="Timing\Extensions.cs" />
     <Compile Include="Timing\InterruptionInitiation.cs" />
