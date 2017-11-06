@@ -26,13 +26,8 @@ namespace rharel.M3PD.Expectations.Modules
     /// <para>
     /// This module requires the information state to support the following
     /// components:
-    /// 1. Type: <see cref="SocialContext"/>; 
-    ///    Identifier: 'rharel.M3PD.Expectations.State.SocialContext'.
-    ///    This is expected to be constant throughout the interaction.
-    /// 2. Type: <see cref="CurrentActivity"/>;
-    ///    Identifier: 'rharel.M3PD.Expectations.State.CurrentActivity'.
-    ///    This is expected to equal the output of the system's 
-    ///    <see cref="CAPModule"/>.
+    /// 1. Type: <see cref="SocialContext"/>
+    ///    Identifier: <see cref="SOCIAL_CONTEXT_COMPONENT_ID"/>
     /// </para>
     /// </remarks>
     public sealed class ATModule: Agency.Modules.ATModule
@@ -95,9 +90,8 @@ namespace rharel.M3PD.Expectations.Modules
         {
             if (_interaction.IsResolved) { return false; }
 
-            var current_activity = State.Get<CurrentActivity>(
-                "rharel.M3PD.Expectations.State.CurrentActivity"
-            );
+            CurrentActivity current_activity = State.CurrentActivity;
+
             bool i_am_active = (
                 current_activity.ActiveIDs.Contains(_self_id)
             );

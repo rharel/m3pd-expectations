@@ -1,4 +1,6 @@
-﻿using rharel.M3PD.Common.Collections;
+﻿using rharel.M3PD.Agency.Modules;
+using rharel.M3PD.Agency.System;
+using rharel.M3PD.Common.Collections;
 using rharel.M3PD.Common.DesignPatterns;
 using System;
 using System.Collections.Generic;
@@ -20,6 +22,10 @@ namespace rharel.M3PD.Agency.State
     /// associated with a type and an identifier. Which components are 
     /// available on a given state object is specified during construction, and 
     /// can be queried through the <see cref="ComponentIDs"/> property.
+    /// </para>
+    /// <para>
+    /// Components identifiers prefixed with an _underscore should be 
+    /// considered reserved.
     /// </para>
     /// </remarks>
     public sealed class InformationState: StateAccessor, StateMutator
@@ -101,6 +107,22 @@ namespace rharel.M3PD.Agency.State
             ComponentIDs = new CollectionView<string>(_components.Keys);
         }
 
+        /// <summary>
+        /// The output of <see cref="RAPModule"/>.
+        /// </summary>
+        /// <remarks>Set by the <see cref="AgencySystem"/>.</remarks>
+        public RecentActivity RecentActivity { get; internal set; }
+        /// <summary>
+        /// The output of <see cref="CAPModule"/>.
+        /// </summary>
+        /// <remarks>Set by the <see cref="AgencySystem"/>.</remarks>
+        public CurrentActivity CurrentActivity { get; internal set; }
+        /// <summary>
+        /// The system's own activity status.
+        /// </summary>
+        /// <remarks>Set by the <see cref="AgencySystem"/>.</remarks>
+        public SystemActivity SystemActivity { get; internal set; }
+        
         /// <summary>
         /// Gets supported component identifiers.
         /// </summary>

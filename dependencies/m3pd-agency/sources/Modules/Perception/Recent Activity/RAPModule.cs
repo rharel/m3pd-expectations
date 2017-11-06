@@ -24,9 +24,7 @@
         /// Fills in an activity report.
         /// </summary>
         /// <param name="report">The report to fill in.</param>
-        protected abstract void ComposeActivityReport(
-            RecentActivity report
-        );
+        protected abstract void ComposeActivityReport(RecentActivity report);
 
         /// <summary>
         /// Returns a string that represents this instance.

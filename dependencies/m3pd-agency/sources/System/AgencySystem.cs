@@ -77,21 +77,17 @@ namespace rharel.M3PD.Agency.System
         /// </exception>
         public void Step()
         {
-            RecentActivity recent_activity = (
+            State.RecentActivity = (
                 Modules.RecentActivityPerception.PerceiveActivity()
             );
-            CurrentActivity current_activity = (
+            State.CurrentActivity = (
                 Modules.CurrentActivityPerception.PerceiveActivity()
             );
-
-            var system_activity = new SystemActivity(
+            State.SystemActivity = new SystemActivity(
                 RecentMove, TargetMove, IsActive
             );
 
-            Modules.StateUpdate.PerformUpdate(
-                recent_activity, current_activity, system_activity,
-                State
-            );
+            Modules.StateUpdate.PerformUpdate(State);
 
             TargetMove = Modules.ActionSelection.SelectMove();
             if (TargetMove == null)
