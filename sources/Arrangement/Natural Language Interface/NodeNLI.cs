@@ -182,6 +182,48 @@ namespace rharel.M3PD.Expectations.Arrangement
             return new Sequence(id, children);
         }
 
+        #region Alias methods
+
+        /// <summary>
+        /// Expects satisfaction of all children in no particular order.
+        /// </summary>
+        /// <param name="id">The node's identifier.</param>
+        /// <param name="children">The node's children.</param>
+        /// <exception cref="ArgumentNullException">
+        /// When <paramref name="children"/> is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// When <paramref name="id"/> is blank or already taken.
+        /// When <paramref name="children"/> contains less than two members.
+        /// </exception>
+        /// <returns>A conjunctive expectation.</returns>
+        /// <remarks>
+        /// This is an alias for <see cref="Conjunction(string, Node[])"/>.
+        /// </remarks>
+        public Conjunction All(string id = null, params Node[] children)
+        {
+            return Conjunction(id, children);
+        }
+        /// <summary>
+        /// Expects satisfaction of at least one child.
+        /// </summary>
+        /// <param name="id">The node's identifier.</param>
+        /// <param name="children">The node's children.</param>
+        /// <exception cref="ArgumentNullException">
+        /// When <paramref name="children"/> is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// When <paramref name="id"/> is blank or already taken.
+        /// When <paramref name="children"/> contains less than two members.
+        /// </exception>
+        /// <returns>A conjunctive expectation.</returns>
+        /// <remarks>
+        /// This is an alias for <see cref="Disjunction(string, Node[])"/>.
+        /// </remarks>
+        public Disjunction Any(string id = null, params Node[] children)
+        {
+            return Disjunction(id, children);
+        }
         /// <summary>
         /// Expects a specified event indefinitely.
         /// </summary>
@@ -199,7 +241,54 @@ namespace rharel.M3PD.Expectations.Arrangement
         {
             return IndefiniteEvent(@event, id);
         }
+        /// <summary>
+        /// Expects to satisfy a specified child only while a specified 
+        /// condition holds.
+        /// </summary>
+        /// <param name="body">The node's only child.</param>
+        /// <param name="condition">The condition to apply.</param>
+        /// <param name="id">The node's identifier.</param>
+        /// <returns>A new expectation node.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// When either <paramref name="body"/> or 
+        /// <paramref name="condition"/> is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// When <paramref name="id"/> is blank or already taken.
+        /// </exception>
+        /// <remarks>
+        /// This is an alias for 
+        /// <see cref="Conditional(Node, Predicate, string)"/>.
+        /// </remarks>
+        public Conditional If(Node body, Predicate condition, string id = null)
+        {
+            return Conditional(body, condition, id);
+        }
+        /// <summary>
+        /// Expects to satisfy exactly one child. The child selected to be the 
+        /// one satisfied is the first whose scope carrier chain's endpoint is 
+        /// partially satisfied.
+        /// </summary>
+        /// <param name="id">The node's identifier.</param>
+        /// <param name="children">The node's children.</param>
+        /// <exception cref="ArgumentNullException">
+        /// When <paramref name="children"/> is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// When <paramref name="id"/> is blank or already taken.
+        /// When <paramref name="children"/> contains less than two members.
+        /// </exception>
+        /// <returns>A conjunctive expectation.</returns>
+        /// <remarks>
+        /// This is an alias for <see cref="Divergence(string, Node[])"/>.
+        /// </remarks>
+        public Divergence OneOf(string id = null, params Node[] children)
+        {
+            return Divergence(id, children);
+        }
 
+        #endregion Alias methods
+        
         /// <summary>
         /// Validates the specified node identifier.
         /// </summary>
