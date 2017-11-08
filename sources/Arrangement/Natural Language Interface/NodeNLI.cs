@@ -183,21 +183,6 @@ namespace rharel.M3PD.Expectations.Arrangement
         }
 
         /// <summary>
-        /// Creates a sequence expectation node.
-        /// </summary>
-        /// <param name="title">The node's title.</param>
-        /// <param name="nodes">The node's children.</param>
-        /// <returns>A sequential expectation.</returns>
-        public static Sequence ExpectSequence
-        (
-            string title,
-            params Node[] nodes
-        )
-        {
-            return new Sequence(title, nodes);
-        }
-
-        /// <summary>
         /// Expects a specified event indefinitely.
         /// </summary>
         /// <param name="event">The expected event.</param>
