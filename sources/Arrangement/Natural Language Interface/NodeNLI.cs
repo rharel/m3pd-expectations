@@ -66,8 +66,8 @@ namespace rharel.M3PD.Expectations.Arrangement
         /// Expects to satisfy a specified child only while a specified 
         /// condition holds.
         /// </summary>
-        /// <param name="body">The node's only child.</param>
         /// <param name="condition">The condition to apply.</param>
+        /// <param name="body">The node's only child.</param>
         /// <param name="id">The node's identifier.</param>
         /// <returns>A new expectation node.</returns>
         /// <exception cref="ArgumentNullException">
@@ -78,7 +78,7 @@ namespace rharel.M3PD.Expectations.Arrangement
         /// When <paramref name="id"/> is blank or already taken.
         /// </exception>
         public Conditional Conditional(
-            Node body, Predicate condition, string id = null)
+            Predicate condition, Node body, string id = null)
         {
             id = ProcessNewNode(typeof(Conditional), id);
             return new Conditional(id, body, condition);
@@ -245,8 +245,8 @@ namespace rharel.M3PD.Expectations.Arrangement
         /// Expects to satisfy a specified child only while a specified 
         /// condition holds.
         /// </summary>
-        /// <param name="body">The node's only child.</param>
         /// <param name="condition">The condition to apply.</param>
+        /// <param name="body">The node's only child.</param>
         /// <param name="id">The node's identifier.</param>
         /// <returns>A conditional expectation.</returns>
         /// <exception cref="ArgumentNullException">
@@ -260,9 +260,9 @@ namespace rharel.M3PD.Expectations.Arrangement
         /// This is an alias for 
         /// <see cref="Conditional(Node, Predicate, string)"/>.
         /// </remarks>
-        public Conditional If(Node body, Predicate condition, string id = null)
+        public Conditional If(Predicate condition, Node body, string id = null)
         {
-            return Conditional(body, condition, id);
+            return Conditional(condition, body, id);
         }
         /// <summary>
         /// Expects to satisfy exactly one child. The child selected to be the 
