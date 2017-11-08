@@ -61,23 +61,6 @@ namespace rharel.M3PD.Expectations.Arrangement
             id = ProcessNewNode(typeof(IndefiniteEvent), id);
             return new IndefiniteEvent(id, @event);
         }
-        /// <summary>
-        /// Expects a specified event indefinitely.
-        /// </summary>
-        /// <param name="event">The expected event.</param>
-        /// <param name="id">The node's identifier.</param>
-        /// <returns>A new expectation node.</returns>
-        /// <exception cref="ArgumentException">
-        /// When <paramref name="id"/> is blank or already taken.
-        /// </exception>
-        /// <remarks>
-        /// This is an alias for 
-        /// <see cref="IndefiniteEvent(DialogueEvent, string)"/>.
-        /// </remarks>
-        public IndefiniteEvent Event(DialogueEvent @event, string id = null)
-        {
-            return IndefiniteEvent(@event, id);
-        }
 
         /// <summary>
         /// Expects to satisfy a specified child only while a specified 
@@ -212,6 +195,24 @@ namespace rharel.M3PD.Expectations.Arrangement
         )
         {
             return new Sequence(title, nodes);
+        }
+
+        /// <summary>
+        /// Expects a specified event indefinitely.
+        /// </summary>
+        /// <param name="event">The expected event.</param>
+        /// <param name="id">The node's identifier.</param>
+        /// <returns>A new expectation node.</returns>
+        /// <exception cref="ArgumentException">
+        /// When <paramref name="id"/> is blank or already taken.
+        /// </exception>
+        /// <remarks>
+        /// This is an alias for 
+        /// <see cref="IndefiniteEvent(DialogueEvent, string)"/>.
+        /// </remarks>
+        public IndefiniteEvent Event(DialogueEvent @event, string id = null)
+        {
+            return IndefiniteEvent(@event, id);
         }
 
         /// <summary>
