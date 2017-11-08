@@ -11,11 +11,11 @@ namespace rharel.M3PD.Expectations.Arrangement
     /// <code>
     /// using static rharel.Expectations.Program.DialogueEventNLI;
     /// 
-    /// struct Greeting { string TargetID; }
+    /// struct Greeting { Greeting(addressee) { ... } }
     /// ...
     /// Event("greeting", 
     ///     source: "Alice", 
-    ///     properties: new Greeting { TargetID = "Bob" }
+    ///     properties: new Greeting(addressee: "Bob")
     /// );
     /// </code>
     /// </example>
