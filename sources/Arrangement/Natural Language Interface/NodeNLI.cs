@@ -89,6 +89,7 @@ namespace rharel.M3PD.Expectations.Arrangement
         /// </summary>
         /// <param name="id">The node's identifier.</param>
         /// <param name="children">The node's children.</param>
+        /// <returns>A new expectation node.</returns>
         /// <exception cref="ArgumentNullException">
         /// When <paramref name="children"/> is null.
         /// </exception>
@@ -96,7 +97,6 @@ namespace rharel.M3PD.Expectations.Arrangement
         /// When <paramref name="id"/> is blank or already taken.
         /// When <paramref name="children"/> contains less than two members.
         /// </exception>
-        /// <returns>A conjunctive expectation.</returns>
         public Conjunction Conjunction(
             string id = null, params Node[] children)
         {
@@ -109,6 +109,7 @@ namespace rharel.M3PD.Expectations.Arrangement
         /// </summary>
         /// <param name="id">The node's identifier.</param>
         /// <param name="children">The node's children.</param>
+        /// <returns>A new expectation node.</returns>
         /// <exception cref="ArgumentNullException">
         /// When <paramref name="children"/> is null.
         /// </exception>
@@ -116,7 +117,6 @@ namespace rharel.M3PD.Expectations.Arrangement
         /// When <paramref name="id"/> is blank or already taken.
         /// When <paramref name="children"/> contains less than two members.
         /// </exception>
-        /// <returns>A conjunctive expectation.</returns>
         public Disjunction Disjunction(
             string id = null, params Node[] children)
         {
@@ -131,6 +131,7 @@ namespace rharel.M3PD.Expectations.Arrangement
         /// </summary>
         /// <param name="id">The node's identifier.</param>
         /// <param name="children">The node's children.</param>
+        /// <returns>A new expectation node.</returns>
         /// <exception cref="ArgumentNullException">
         /// When <paramref name="children"/> is null.
         /// </exception>
@@ -138,7 +139,6 @@ namespace rharel.M3PD.Expectations.Arrangement
         /// When <paramref name="id"/> is blank or already taken.
         /// When <paramref name="children"/> contains less than two members.
         /// </exception>
-        /// <returns>A conjunctive expectation.</returns>
         public Divergence Divergence(string id = null, params Node[] children)
         {
             id = ProcessNewNode(typeof(Divergence), id);
@@ -168,6 +168,7 @@ namespace rharel.M3PD.Expectations.Arrangement
         /// </summary>
         /// <param name="id">The node's identifier.</param>
         /// <param name="children">The node's children.</param>
+        /// <returns>A new expectation node.</returns>
         /// <exception cref="ArgumentNullException">
         /// When <paramref name="children"/> is null.
         /// </exception>
@@ -175,7 +176,6 @@ namespace rharel.M3PD.Expectations.Arrangement
         /// When <paramref name="id"/> is blank or already taken.
         /// When <paramref name="children"/> contains less than two members.
         /// </exception>
-        /// <returns>A conjunctive expectation.</returns>
         public Sequence Sequence(string id = null, params Node[] children)
         {
             id = ProcessNewNode(typeof(Sequence), id);
@@ -189,6 +189,7 @@ namespace rharel.M3PD.Expectations.Arrangement
         /// </summary>
         /// <param name="id">The node's identifier.</param>
         /// <param name="children">The node's children.</param>
+        /// <returns>A conjunctive expectation.</returns>
         /// <exception cref="ArgumentNullException">
         /// When <paramref name="children"/> is null.
         /// </exception>
@@ -196,7 +197,6 @@ namespace rharel.M3PD.Expectations.Arrangement
         /// When <paramref name="id"/> is blank or already taken.
         /// When <paramref name="children"/> contains less than two members.
         /// </exception>
-        /// <returns>A conjunctive expectation.</returns>
         /// <remarks>
         /// This is an alias for <see cref="Conjunction(string, Node[])"/>.
         /// </remarks>
@@ -209,6 +209,7 @@ namespace rharel.M3PD.Expectations.Arrangement
         /// </summary>
         /// <param name="id">The node's identifier.</param>
         /// <param name="children">The node's children.</param>
+        /// <returns>A disjunctive expectation.</returns>
         /// <exception cref="ArgumentNullException">
         /// When <paramref name="children"/> is null.
         /// </exception>
@@ -216,7 +217,6 @@ namespace rharel.M3PD.Expectations.Arrangement
         /// When <paramref name="id"/> is blank or already taken.
         /// When <paramref name="children"/> contains less than two members.
         /// </exception>
-        /// <returns>A conjunctive expectation.</returns>
         /// <remarks>
         /// This is an alias for <see cref="Disjunction(string, Node[])"/>.
         /// </remarks>
@@ -229,7 +229,7 @@ namespace rharel.M3PD.Expectations.Arrangement
         /// </summary>
         /// <param name="event">The expected event.</param>
         /// <param name="id">The node's identifier.</param>
-        /// <returns>A new expectation node.</returns>
+        /// <returns>An indefinite event expectation.</returns>
         /// <exception cref="ArgumentException">
         /// When <paramref name="id"/> is blank or already taken.
         /// </exception>
@@ -248,7 +248,7 @@ namespace rharel.M3PD.Expectations.Arrangement
         /// <param name="body">The node's only child.</param>
         /// <param name="condition">The condition to apply.</param>
         /// <param name="id">The node's identifier.</param>
-        /// <returns>A new expectation node.</returns>
+        /// <returns>A conditional expectation.</returns>
         /// <exception cref="ArgumentNullException">
         /// When either <paramref name="body"/> or 
         /// <paramref name="condition"/> is null.
@@ -271,6 +271,7 @@ namespace rharel.M3PD.Expectations.Arrangement
         /// </summary>
         /// <param name="id">The node's identifier.</param>
         /// <param name="children">The node's children.</param>
+        /// <returns>A divergent expectation.</returns>
         /// <exception cref="ArgumentNullException">
         /// When <paramref name="children"/> is null.
         /// </exception>
@@ -278,7 +279,6 @@ namespace rharel.M3PD.Expectations.Arrangement
         /// When <paramref name="id"/> is blank or already taken.
         /// When <paramref name="children"/> contains less than two members.
         /// </exception>
-        /// <returns>A conjunctive expectation.</returns>
         /// <remarks>
         /// This is an alias for <see cref="Divergence(string, Node[])"/>.
         /// </remarks>
