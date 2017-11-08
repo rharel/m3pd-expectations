@@ -96,7 +96,7 @@ namespace rharel.M3PD.Agency.Dialogue_Moves
         /// <summary>
         /// Gets this move's type identifier.
         /// </summary>
-        public string Type { get; private set; }
+        public string Type { get; }
         
         /// <summary>
         /// Gets this move's properties.
@@ -104,7 +104,7 @@ namespace rharel.M3PD.Agency.Dialogue_Moves
         /// <remarks>
         /// <see cref="DialogueMove.Properties"/> for the non-generic version.
         /// </remarks>
-        public Optional<T> Properties { get; private set; }
+        public Optional<T> Properties { get; }
         /// <summary>
         /// Gets this move's properties.
         /// </summary>
