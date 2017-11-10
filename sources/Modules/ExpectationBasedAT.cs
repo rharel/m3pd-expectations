@@ -30,7 +30,7 @@ namespace rharel.M3PD.Expectations.Modules
     ///    Identifier: <see cref="CommonComponentIDs.SOCIAL_CONTEXT"/>
     /// </para>
     /// </remarks>
-    public sealed class ATModule: Agency.Modules.ATModule
+    public sealed class ExpectationBasedAT: Agency.Modules.ATModule
     {
         /// <summary>
         /// Creates a new module with the specified interruption rules.
@@ -41,7 +41,7 @@ namespace rharel.M3PD.Expectations.Modules
         /// <exception cref="ArgumentNullException">
         /// When <paramref name="interruption_rules"/> is null.
         /// </exception>
-        public ATModule(
+        public ExpectationBasedAT(
             IEnumerable<KeyValuePair<string, InterruptionRules>> 
             interruption_rules)
         {
@@ -57,7 +57,7 @@ namespace rharel.M3PD.Expectations.Modules
         /// <summary>
         /// Creates a new module with no interruption rules.
         /// </summary>
-        public ATModule(): 
+        public ExpectationBasedAT(): 
             this(new KeyValuePair<string, InterruptionRules>[0]) { }
 
         /// <summary>
@@ -176,7 +176,7 @@ namespace rharel.M3PD.Expectations.Modules
         /// <returns>A human-readable string.</returns>
         public override string ToString()
         {
-            return $"{nameof(ATModule)}{{ " +
+            return $"{nameof(ExpectationBasedAT)}{{ " +
                    $"{nameof(State)} = {State} }}";
         }
 

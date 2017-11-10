@@ -26,7 +26,7 @@ namespace rharel.M3PD.Expectations.Modules
     ///    Identifier: <see cref="CommonComponentIDs.SOCIAL_CONTEXT"/>
     /// </para>
     /// </remarks>
-    public sealed class ASModule: Agency.Modules.ASModule
+    public sealed class ExpectationBasedAS: Agency.Modules.ASModule
     {
         /// <summary>
         /// Selects of one winner out of a set of candidate moves.
@@ -54,7 +54,7 @@ namespace rharel.M3PD.Expectations.Modules
         /// <exception cref="ArgumentNullException">
         /// When <paramref name="candidate_selector"/> is null.
         /// </exception>
-        public ASModule(SelectionMethod candidate_selector)
+        public ExpectationBasedAS(SelectionMethod candidate_selector)
         {
             if (candidate_selector == null)
             {
@@ -69,7 +69,7 @@ namespace rharel.M3PD.Expectations.Modules
         /// The default selector always selects the first candidate as the 
         /// winner.
         /// </remarks>
-        public ASModule(): this((candidates, state) => new Some<int>(0)) { }
+        public ExpectationBasedAS(): this((candidates, state) => new Some<int>(0)) { }
 
         /// <summary>
         /// Gets the method used to select a winning candidate move.
@@ -130,7 +130,7 @@ namespace rharel.M3PD.Expectations.Modules
         /// <returns>A human-readable string.</returns>
         public override string ToString()
         {
-            return $"{nameof(ASModule)}{{ " +
+            return $"{nameof(ExpectationBasedAS)}{{ " +
                    $"{nameof(State)} = {State} }}";
         }
 

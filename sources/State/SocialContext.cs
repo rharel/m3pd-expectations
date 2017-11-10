@@ -6,7 +6,7 @@ namespace rharel.M3PD.Expectations.State
 {
     /// <summary>
     /// Represents the state components required by 
-    /// <see cref="Modules.ASModule"/> and <see cref="Modules.ATModule"/>.
+    /// <see cref="Modules.ExpectationBasedAS"/> and <see cref="Modules.ExpectationBasedAT"/>.
     /// </summary>
     public struct SocialContext
     {

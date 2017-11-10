@@ -55,8 +55,8 @@
     <Compile Include="Arrangement\Natural Language Interface\NodeNLI.cs" />
     <Compile Include="Arrangement\Node.cs" />
     <Compile Include="Arrangement\Resolution.cs" />
-    <Compile Include="Modules\ASModule.cs" />
-    <Compile Include="Modules\ATModule.cs" />
+    <Compile Include="Modules\ExpectationBasedAS.cs" />
+    <Compile Include="Modules\ExpectationBasedAT.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="State\CommonComponentIDs.cs" />
     <Compile Include="State\SocialContext.cs" />
