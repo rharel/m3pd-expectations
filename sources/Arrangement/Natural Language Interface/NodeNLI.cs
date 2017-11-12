@@ -80,6 +80,25 @@ namespace rharel.M3PD.Expectations.Arrangement
             var @event = new DialogueEvent(source, move);
             return IndefiniteEvent(@event);
         }
+        /// <summary>
+        /// Expects a specified event indefinitely.
+        /// </summary>
+        /// <param name="source">
+        /// The identifier of the agent who realized the move.
+        /// </param>
+        /// <param name="move">The move that was realized.</param>
+        /// <exception cref="ArgumentNullException">
+        /// When <paramref name="source"/> is null.
+        /// When <paramref name="move"/> is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// When <paramref name="source"/> is blank.
+        /// </exception>
+        public IndefiniteEvent IndefiniteEvent<T>(
+            string source, DialogueMoveNLI.Builder<T> move)
+        {
+            return IndefiniteEvent(source, move.Build());
+        }
 
         /// <summary>
         /// Expects to satisfy a specified child only while a specified 
@@ -112,7 +131,7 @@ namespace rharel.M3PD.Expectations.Arrangement
         /// When <paramref name="children"/> contains less than two members.
         /// </exception>
         public Conjunction Conjunction(
-            string id = null, params Node[] children)
+            string id, params Node[] children)
         {
             id = ProcessNewNode(typeof(Conjunction), id);
             return new Conjunction(id, children);
@@ -132,7 +151,7 @@ namespace rharel.M3PD.Expectations.Arrangement
         /// When <paramref name="children"/> contains less than two members.
         /// </exception>
         public Disjunction Disjunction(
-            string id = null, params Node[] children)
+            string id, params Node[] children)
         {
             id = ProcessNewNode(typeof(Disjunction), id);
             return new Disjunction(id, children);
@@ -153,7 +172,7 @@ namespace rharel.M3PD.Expectations.Arrangement
         /// When <paramref name="id"/> is blank or already taken.
         /// When <paramref name="children"/> contains less than two members.
         /// </exception>
-        public Divergence Divergence(string id = null, params Node[] children)
+        public Divergence Divergence(string id, params Node[] children)
         {
             id = ProcessNewNode(typeof(Divergence), id);
             return new Divergence(id, children);
@@ -186,7 +205,7 @@ namespace rharel.M3PD.Expectations.Arrangement
         /// When <paramref name="id"/> is blank or already taken.
         /// When <paramref name="children"/> contains less than two members.
         /// </exception>
-        public Sequence Sequence(string id = null, params Node[] children)
+        public Sequence Sequence(string id, params Node[] children)
         {
             id = ProcessNewNode(typeof(Sequence), id);
             return new Sequence(id, children);
@@ -210,7 +229,7 @@ namespace rharel.M3PD.Expectations.Arrangement
         /// <remarks>
         /// This is an alias for <see cref="Conjunction(string, Node[])"/>.
         /// </remarks>
-        public Conjunction All(string id = null, params Node[] children)
+        public Conjunction All(string id, params Node[] children)
         {
             return Conjunction(id, children);
         }
@@ -230,7 +249,7 @@ namespace rharel.M3PD.Expectations.Arrangement
         /// <remarks>
         /// This is an alias for <see cref="Disjunction(string, Node[])"/>.
         /// </remarks>
-        public Disjunction Any(string id = null, params Node[] children)
+        public Disjunction Any(string id, params Node[] children)
         {
             return Disjunction(id, children);
         }
@@ -273,6 +292,30 @@ namespace rharel.M3PD.Expectations.Arrangement
             return IndefiniteEvent(source, move);
         }
         /// <summary>
+        /// Expects a specified event indefinitely.
+        /// </summary>
+        /// <param name="source">
+        /// The identifier of the agent who realized the move.
+        /// </param>
+        /// <param name="move">The move that was realized.</param>
+        /// <exception cref="ArgumentNullException">
+        /// When <paramref name="source"/> is null.
+        /// When <paramref name="move"/> is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// When <paramref name="source"/> is blank.
+        /// </exception>
+        /// <remarks>
+        /// This is an alias for 
+        /// <see cref="IndefiniteEvent(string, DialogueMoveNLI.Builder{T})"/>.
+        /// </remarks>
+        public IndefiniteEvent Event<T>(
+            string source, DialogueMoveNLI.Builder<T> move)
+        {
+            return IndefiniteEvent(source, move);
+        }
+
+        /// <summary>
         /// Expects to satisfy a specified child only while a specified 
         /// condition holds.
         /// </summary>
@@ -309,7 +352,7 @@ namespace rharel.M3PD.Expectations.Arrangement
         /// <remarks>
         /// This is an alias for <see cref="Divergence(string, Node[])"/>.
         /// </remarks>
-        public Divergence OneOf(string id = null, params Node[] children)
+        public Divergence OneOf(string id, params Node[] children)
         {
             return Divergence(id, children);
         }
