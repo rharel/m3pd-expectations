@@ -123,17 +123,16 @@ namespace rharel.M3PD.Expectations.Arrangement
         /// </summary>
         /// <param name="type">The move's type identifier.</param>
         /// <returns>A new move.</returns>
-        /// <exception cref="ArgumentNullException">
-        /// When <paramref name="type"/> is null.
-        /// </exception>
         /// <exception cref="ArgumentException">
         /// When <paramref name="type"/> is blank.
         /// </exception>
         public static Builder<T> Move<T>(
-            string type, 
+            string addressee = null,
             T properties = default(T),
-            string addressee = null)
+            string type = null)
         {
+            if (type == null) { type = typeof(T).Name; }
+
             var builder = new Builder<T>(type);
 
             if (properties != null) { builder.WithProperties(properties); }
