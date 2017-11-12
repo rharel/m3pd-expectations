@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using static rharel.Functional.Option;
 
 namespace rharel.M3PD.Expectations.Timing
 {
@@ -57,11 +58,11 @@ namespace rharel.M3PD.Expectations.Timing
                 }
                 ballot[rule.Implication] += rule.Weight;
             }
-            if (ballot.Count == 0) { return new None<T>(); }
+            if (ballot.Count == 0) { return None<T>(); }
             else
             {
-                return new Some<T>(
-                    ballot.Aggregate((a, b) => a.Value > b.Value ? a : b).Key
+                return Some(ballot.Aggregate(
+                    (a, b) => a.Value > b.Value ? a : b).Key
                 );
             }
         }

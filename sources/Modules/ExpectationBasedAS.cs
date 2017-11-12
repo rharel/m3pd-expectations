@@ -6,6 +6,7 @@ using rharel.M3PD.Expectations.Arrangement;
 using rharel.M3PD.Expectations.State;
 using System;
 using System.Collections.Generic;
+using static rharel.Functional.Option;
 
 namespace rharel.M3PD.Expectations.Modules
 {
@@ -69,7 +70,7 @@ namespace rharel.M3PD.Expectations.Modules
         /// The default selector always selects the first candidate as the 
         /// winner.
         /// </remarks>
-        public ExpectationBasedAS(): this((candidates, state) => new Some<int>(0)) { }
+        public ExpectationBasedAS(): this((candidates, state) => Some(0)) { }
 
         /// <summary>
         /// Gets the method used to select a winning candidate move.

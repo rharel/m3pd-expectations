@@ -1,6 +1,11 @@
 ﻿using rharel.Functional;
+using rharel.M3PD.Common.Collections;
+using rharel.M3PD.Common.DesignPatterns;
 using rharel.M3PD.Common.Hashing;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using static rharel.Functional.Option;
 
 namespace rharel.M3PD.Agency.Dialogue_Moves
 {
@@ -29,6 +34,10 @@ namespace rharel.M3PD.Agency.Dialogue_Moves
         /// </summary>
         string Type { get; }
         /// <summary>
+        /// Gets this move's addressee identifiers.
+        /// </summary>
+        ImmutableCollection<string> AddresseeIDs { get; }
+        /// <summary>
         /// Gets this move's properties.
         /// </summary>
         Optional<object> Properties { get; }
@@ -41,55 +50,153 @@ namespace rharel.M3PD.Agency.Dialogue_Moves
     /// <see cref="DialogueMove"/> for the non-generic version and additional
     /// details.
     /// </remarks>
-    public struct DialogueMove<T>: DialogueMove
+    public sealed class DialogueMove<T>: DialogueMove
     {
         /// <summary>
-        /// Creates a new move of the specified type.
+        /// Builds instances of <see cref="DialogueMove{T}"/>.
         /// </summary>
-        /// <param name="type">The move's type identifier.</param>
-        /// <exception cref="ArgumentNullException">
-        /// When <paramref name="type"/> is null.
-        /// </exception>
-        /// <exception cref="ArgumentException">
-        /// When <paramref name="type"/> is blank.
-        /// </exception>
-        public DialogueMove(string type): this(type, new None<T>()) { }
-        /// <summary>
-        /// Creates a new move of the specified type and properties.
-        /// </summary>
-        /// <param name="type">The move's type identifier.</param>
-        /// <param name="properties">The move's properties.</param>
-        /// <exception cref="ArgumentNullException">
-        /// When either <paramref name="type"/> or 
-        /// <paramref name="properties"/> is null.
-        /// </exception>
-        /// <exception cref="ArgumentException">
-        /// When <paramref name="type"/> is blank.
-        /// </exception>
-        public DialogueMove(string type, T properties): 
-            this(type, new Some<T>(properties)) { }
-        /// <summary>
-        /// Creates a new move of the specified type and properties.
-        /// </summary>
-        /// <param name="type">The move's type identifier.</param>
-        /// <param name="properties">The move's properties.</param>
-        /// <exception cref="ArgumentNullException">
-        /// When either <paramref name="type"/> is null.
-        /// </exception>
-        /// <exception cref="ArgumentException">
-        /// When <paramref name="type"/> is blank.
-        /// </exception>
-        private DialogueMove(string type, Optional<T> properties)
+        public sealed class Builder: ObjectBuilder<DialogueMove<T>>
         {
-            if (type == null)
+            /// <summary>
+            /// Creates a new builder for a move of the specified type.
+            /// </summary>
+            /// <param name="type">The move's type identifier.</param>
+            /// <exception cref="ArgumentNullException">
+            /// When <paramref name="type"/> is null.
+            /// </exception>
+            /// <exception cref="ArgumentException">
+            /// When <paramref name="type"/> is blank.
+            /// </exception>
+            public Builder(string type)
             {
-                throw new ArgumentNullException(nameof(type));
+                if (type == null)
+                {
+                    throw new ArgumentNullException(nameof(type));
+                }
+                if (type.Trim().Length == 0)
+                {
+                    throw new ArgumentException(nameof(type));
+                }
+                _type = type;
             }
-            if (type.Trim().Length == 0)
+
+            /// <summary>
+            /// Adds the specified identifier as an addressee.
+            /// </summary>
+            /// <param name="id">The addressee's identifier.</param>
+            /// <returns>This instance (for method call-chaining).</returns>
+            /// <exception cref="InvalidOperationException">
+            /// When called on a built object.
+            /// </exception>
+            /// <exception cref="ArgumentNullException">
+            /// When <paramref name="id"/> is null.
+            /// </exception>
+            /// <exception cref="ArgumentException">
+            /// When <paramref name="id"/> is blank.
+            /// </exception>
+            public Builder WithAddressee(string id)
             {
-                throw new ArgumentException(nameof(type));
+                if (IsBuilt)
+                {
+                    throw new InvalidOperationException(
+                        "Object is already built."
+                    );
+                }
+                if (id == null)
+                {
+                    throw new ArgumentNullException(nameof(id));
+                }
+                if (id.Trim().Length == 0)
+                {
+                    throw new ArgumentException(nameof(id));
+                }
+
+                _addressee_ids.Add(id);
+
+                return this;
             }
+            /// <summary>
+            /// Adds the specified identifiers as an addressees.
+            /// </summary>
+            /// <param name="ids">The addressees' identifiers.</param>
+            /// <returns>This instance (for method call-chaining).</returns>
+            /// <exception cref="InvalidOperationException">
+            /// When called on a built object.
+            /// </exception>
+            /// <exception cref="ArgumentNullException">
+            /// When <paramref name="ids"/> is null.
+            /// When <paramref name="ids"/> contains null.
+            /// </exception>
+            /// <exception cref="ArgumentException">
+            /// When <paramref name="ids"/> contains a blank identifier.
+            /// </exception>
+            public Builder WithAddressees(IEnumerable<string> ids)
+            {
+                if (IsBuilt)
+                {
+                    throw new InvalidOperationException(
+                        "Object is already built."
+                    );
+                }
+                if (ids == null)
+                {
+                    throw new ArgumentNullException(nameof(ids));
+                }
+
+                _addressee_ids.UnionWith(ids);
+
+                return this;
+            }
+            /// <summary>
+            /// Adds the specified properties.
+            /// </summary>
+            /// <param name="value">The value to assign.</param>
+            /// <returns>This instance (for method call-chaining).</returns>
+            /// <exception cref="InvalidOperationException">
+            /// When called on a built object.
+            /// </exception>
+            public Builder WithProperties(T value)
+            {
+                if (IsBuilt)
+                {
+                    throw new InvalidOperationException(
+                        "Object is already built."
+                    );
+                }
+
+                _properties = Some(value);
+
+                return this;
+            }
+
+            /// <summary>
+            /// Creates the object.
+            /// </summary>
+            /// <returns>The built object.</returns>
+            protected override DialogueMove<T> CreateObject()
+            {
+                return new DialogueMove<T>(_type, _addressee_ids, _properties);
+            }
+
+            private readonly string _type;
+            private HashSet<string> _addressee_ids = new HashSet<string>();
+            private Optional<T> _properties = None<T>();
+        }
+        /// <summary>
+        /// Creates a new move of the specified type and properties.
+        /// </summary>
+        /// <param name="type">The move's type identifier.</param>
+        /// <param name="addressee_ids">
+        /// The move's addressee identifiers.
+        /// </param>
+        /// <param name="properties">The move's properties.</param>
+        private DialogueMove(
+            string type, 
+            HashSet<string> addressee_ids, 
+            Optional<T> properties)
+        {
             Type = type;
+            AddresseeIDs = new CollectionView<string>(addressee_ids);
             Properties = properties;
         }
 
@@ -97,7 +204,11 @@ namespace rharel.M3PD.Agency.Dialogue_Moves
         /// Gets this move's type identifier.
         /// </summary>
         public string Type { get; }
-        
+        /// <summary>
+        /// Gets this move's addressee identifiers.
+        /// </summary>
+        public ImmutableCollection<string> AddresseeIDs { get; }
+
         /// <summary>
         /// Gets this move's properties.
         /// </summary>
@@ -123,7 +234,11 @@ namespace rharel.M3PD.Agency.Dialogue_Moves
         /// </returns>
         public DialogueMove<TResult> Cast<TResult>()
         {
-            return new DialogueMove<TResult>(Type, Properties.Cast<TResult>());
+            return new DialogueMove<TResult>(
+                Type, 
+                new HashSet<string>(AddresseeIDs), 
+                Properties.Cast<TResult>()
+            );
         }
 
         /// <summary>
@@ -138,6 +253,9 @@ namespace rharel.M3PD.Agency.Dialogue_Moves
             if (obj is DialogueMove other)
             {
                 return other.Type.Equals(Type) &&
+                       other.AddresseeIDs.All(
+                           id => AddresseeIDs.Contains(id)
+                       ) &&
                        other.Properties.Equals(Properties);
             }
             return false;
@@ -153,6 +271,7 @@ namespace rharel.M3PD.Agency.Dialogue_Moves
         {
             int hash = HashCombiner.Initialize();
             hash = HashCombiner.Hash(hash, Type);
+            hash = HashCombiner.Hash(hash, AddresseeIDs);
             hash = HashCombiner.Hash(hash, Properties);
             
             return hash;
@@ -164,9 +283,165 @@ namespace rharel.M3PD.Agency.Dialogue_Moves
         /// <returns>A human-readable string.</returns>
         public override string ToString()
         {
+            string addressees = String.Join(", ", AddresseeIDs.ToArray());
+
             return $"{nameof(DialogueMove<T>)}{{ " +
                    $"{nameof(Type)} = '{Type}', " +
+                   $"{nameof(AddresseeIDs)} = [{addressees}], " +
                    $"{nameof(Properties)} = {Properties} }}";
+        }
+    }
+    /// <summary>
+    /// Convenience methods for <see cref="DialogueMove"/> instantiation.
+    /// </summary>
+    public static class DialogueMoves
+    {
+        /// <summary>
+        /// Creates a new move of the specified type and optional addressee.
+        /// </summary>
+        /// <param name="type">The move's type identifier.</param>
+        /// <param name="addressee">The move's addressee (optional).</param>
+        /// <returns>A new move.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// When <paramref name="type"/> is null.
+        /// When <paramref name="addressee"/> is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// When <paramref name="type"/> is blank.
+        /// When <paramref name="addressee"/> is blank.
+        /// </exception>
+        public static DialogueMove Create(string type, string addressee = null)
+        {
+            var move = new DialogueMove<object>.Builder(type);
+
+            if (addressee != null) { move.WithAddressee(addressee); }
+
+            return move.Build();
+        }
+        /// <summary>
+        /// Creates a new move of the specified type and addressees.
+        /// </summary>
+        /// <param name="type">The move's type identifier.</param>
+        /// <param name="addressees">The move's addressees.</param>
+        /// <returns>A new move.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// When <paramref name="type"/> is null.
+        /// When <paramref name="addressees"/> is null or contains null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// When <paramref name="type"/> is blank.
+        /// When <paramref name="addressees"/> is blank or contains blank.
+        /// </exception>
+        public static DialogueMove Create(
+            string type, IEnumerable<string> addressees)
+        {
+            var move = new DialogueMove<object>.Builder(type);
+
+            if (addressees != null) { move.WithAddressees(addressees); }
+
+            return move.Build();
+        }
+        /// <summary>
+        /// Creates a new move of the specified type and addressees.
+        /// </summary>
+        /// <param name="type">The move's type identifier.</param>
+        /// <param name="addressees">The move's addressees.</param>
+        /// <returns>A new move.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// When <paramref name="type"/> is null.
+        /// When <paramref name="addressees"/> is null or contains null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// When <paramref name="type"/> is blank.
+        /// When <paramref name="addressees"/> is blank or contains blank.
+        /// </exception>
+        public static DialogueMove Create(
+            string type, params string[] addressees)
+        {
+            var move = new DialogueMove<object>.Builder(type);
+
+            if (addressees != null) { move.WithAddressees(addressees); }
+
+            return move.Build();
+        }
+
+        /// <summary>
+        /// Creates a new move of the specified type, properties and optional 
+        /// addressee.
+        /// </summary>
+        /// <param name="type">The move's type identifier.</param>
+        /// <param name="properties">The move's properties.</param>
+        /// <param name="addressee">The move's addressee (optional).</param>
+        /// <returns>A new move.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// When <paramref name="type"/> is null.
+        /// When <paramref name="addressee"/> is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// When <paramref name="type"/> is blank.
+        /// When <paramref name="addressee"/> is blank.
+        /// </exception>
+        public static DialogueMove<T> Create<T>(
+            string type, T properties, string addressee = null)
+        {
+            var move = new DialogueMove<T>.Builder(type);
+            move.WithProperties(properties);
+
+            if (addressee != null) { move.WithAddressee(addressee); }
+
+            return move.Build();
+        }
+        /// <summary>
+        /// Creates a new move of the specified type, properties, and 
+        /// addressees.
+        /// </summary>
+        /// <param name="type">The move's type identifier.</param>
+        /// <param name="properties">The move's properties.</param>
+        /// <param name="addressees">The move's addressees.</param>
+        /// <returns>A new move.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// When <paramref name="type"/> is null.
+        /// When <paramref name="addressees"/> is null or contains null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// When <paramref name="type"/> is blank.
+        /// When <paramref name="addressees"/> is blank or contains blank.
+        /// </exception>
+        public static DialogueMove<T> Create<T>(
+            string type, T properties, IEnumerable<string> addressees)
+        {
+            var move = new DialogueMove<T>.Builder(type);
+            move.WithProperties(properties);
+
+            if (addressees != null) { move.WithAddressees(addressees); }
+
+            return move.Build();
+        }
+        /// <summary>
+        /// Creates a new move of the specified type, properties, and 
+        /// addressees.
+        /// </summary>
+        /// <param name="type">The move's type identifier.</param>
+        /// <param name="properties">The move's properties.</param>
+        /// <param name="addressees">The move's addressees.</param>
+        /// <returns>A new move.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// When <paramref name="type"/> is null.
+        /// When <paramref name="addressees"/> is null or contains null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// When <paramref name="type"/> is blank.
+        /// When <paramref name="addressees"/> is blank or contains blank.
+        /// </exception>
+        public static DialogueMove<T> Create<T>(
+            string type, T properties, params string[] addressees)
+        {
+            var move = new DialogueMove<T>.Builder(type);
+            move.WithProperties(properties);
+
+            if (addressees != null) { move.WithAddressees(addressees); }
+
+            return move.Build();
         }
     }
 }

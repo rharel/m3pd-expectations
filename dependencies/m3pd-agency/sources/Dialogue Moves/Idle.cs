@@ -11,7 +11,7 @@
         public static DialogueMove Instance => _instance;
 
         private static readonly DialogueMove _instance = (
-            new DialogueMove<object>("idle")
+            DialogueMoves.Create("idle")
         );
     }
 }

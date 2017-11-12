@@ -23,15 +23,10 @@ namespace rharel.M3PD.Agency.System
         /// True iff the system is currently realizing any move but the idle
         /// move.
         /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// When either <paramref name="recent_move"/> or
-        /// <paramref name="target_move"/> is null.
-        /// </exception>
         internal SystemActivity(Optional<DialogueMove> recent_move,
                                 DialogueMove target_move,
                                 bool is_active)
         {
-            Require.IsNotNull(recent_move);
             Require.IsNotNull(target_move);
 
             RecentMove = recent_move;

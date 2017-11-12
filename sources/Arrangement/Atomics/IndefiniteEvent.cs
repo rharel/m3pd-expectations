@@ -17,12 +17,17 @@ namespace rharel.M3PD.Expectations.Arrangement
         /// <param name="event">The expected event.</param>
         /// <exception cref="ArgumentNullException">
         /// When <paramref name="id"/> is null.
+        /// When <paramref name="event"/> is null.
         /// </exception>
         /// <exception cref="ArgumentException">
         /// When <paramref name="id"/> is blank.
         /// </exception>
         public IndefiniteEvent(string id, DialogueEvent @event): base(id)
         {
+            if (@event == null)
+            {
+                throw new ArgumentNullException(nameof(@event));
+            }
             Event = @event;
             Reset();
         }

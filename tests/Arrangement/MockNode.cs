@@ -2,6 +2,7 @@
 using rharel.Functional;
 using rharel.M3PD.Agency.Modules;
 using System.Collections.Generic;
+using static rharel.Functional.Option;
 
 namespace rharel.M3PD.Expectations.Arrangement.Tests
 {
@@ -50,7 +51,7 @@ namespace rharel.M3PD.Expectations.Arrangement.Tests
         {
             Mock.Reset();
             Mock.SetupGet(x => x.ScopeCarrierIndex)
-                .Returns(new None<int>());
+                .Returns(None<int>());
             Mock.Setup(x => x.OnProcess(It.IsAny<DialogueEvent>()))
                 .Returns(Resolution.Pending);
         }

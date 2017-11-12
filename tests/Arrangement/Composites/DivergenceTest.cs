@@ -1,10 +1,10 @@
 ﻿using Moq;
 using NUnit.Framework;
-using rharel.Functional;
 using rharel.M3PD.Agency.Dialogue_Moves;
 using rharel.M3PD.Agency.Modules;
 using System;
 using System.Collections.Generic;
+using static rharel.Functional.Option;
 
 namespace rharel.M3PD.Expectations.Arrangement.Tests
 {
@@ -44,7 +44,7 @@ namespace rharel.M3PD.Expectations.Arrangement.Tests
                     ((MockNode)grandchild).ResetMock();
                 }
                 child.Mock.SetupGet(x => x.ScopeCarrierIndex)
-                          .Returns(new Some<int>(0));
+                          .Returns(Some(0));
             }
             _node = new Divergence(ID, CHILDREN);
         }
@@ -65,7 +65,7 @@ namespace rharel.M3PD.Expectations.Arrangement.Tests
         {
             _node.Process(EVENT);
 
-            Assert.IsFalse(_node.SelectedChildIndex.IsSome());
+            Assert.IsFalse(_node.SelectedChildIndex.IsSome);
             Assert.AreEqual(Resolution.Pending, _node.Resolution);
         }
         [Test]

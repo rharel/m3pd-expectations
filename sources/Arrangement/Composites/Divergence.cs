@@ -2,6 +2,7 @@
 using rharel.M3PD.Agency.Modules;
 using System;
 using System.Collections.Generic;
+using static rharel.Functional.Option;
 
 namespace rharel.M3PD.Expectations.Arrangement
 {
@@ -50,7 +51,7 @@ namespace rharel.M3PD.Expectations.Arrangement
         /// determined).
         /// </summary>
         public Optional<int> SelectedChildIndex { get; private set; } = (
-            new None<int>()
+            None<int>()
         );
         /// <summary>
         /// Gets the index of this node's active scope child (if it has any).
@@ -61,7 +62,7 @@ namespace rharel.M3PD.Expectations.Arrangement
             {
                 if (IsResolved)
                 {
-                    return new None<int>();
+                    return None<int>();
                 }
                 else
                 {
@@ -77,7 +78,7 @@ namespace rharel.M3PD.Expectations.Arrangement
         protected override void OnReset()
         {
             _disjunction.Reset(do_recurse: false);
-            SelectedChildIndex = new None<int>();
+            SelectedChildIndex = None<int>();
         }
         /// <summary>
         /// Called by <see cref="Process(DialogueEvent)"/> to update this
@@ -109,7 +110,7 @@ namespace rharel.M3PD.Expectations.Arrangement
                     );
                     if (index != -1)
                     {
-                        SelectedChildIndex = new Some<int>(index);
+                        SelectedChildIndex = Some(index);
                     }
                     return Resolution.Pending;
                 }
@@ -156,9 +157,9 @@ namespace rharel.M3PD.Expectations.Arrangement
         /// determined).
         /// </summary>
         private Optional<Node> SelectedChild => 
-            SelectedChildIndex.MapSomeOr<int, Optional<Node>>(
-                index => new Some<Node>(Children[index]),
-                new None<Node>()
+            SelectedChildIndex.MapSomeOr(
+                index => Some(Children[index]),
+                None<Node>()
             );
 
         private readonly List<Node> _scope_carrier_endpoints = (

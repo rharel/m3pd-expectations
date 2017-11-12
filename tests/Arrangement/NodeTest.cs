@@ -1,11 +1,11 @@
 ﻿using Moq;
 using NUnit.Framework;
-using rharel.Functional;
 using rharel.M3PD.Agency.Dialogue_Moves;
 using rharel.M3PD.Agency.Modules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using static rharel.Functional.Option;
 
 namespace rharel.M3PD.Expectations.Arrangement.Tests
 {
@@ -166,7 +166,7 @@ namespace rharel.M3PD.Expectations.Arrangement.Tests
         public void Test_GetScopeCarrierChain_WithAbsentCarrier()
         {
             _node.Mock.SetupGet(x => x.ScopeCarrierIndex)
-                      .Returns(new None<int>());
+                      .Returns(None<int>());
 
             var chain = new List<Node>();
             _node.GetScopeCarrierChain(chain);

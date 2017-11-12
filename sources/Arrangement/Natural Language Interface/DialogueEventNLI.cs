@@ -35,7 +35,7 @@ namespace rharel.M3PD.Expectations.Arrangement
         {
             return new DialogueEvent(
                 source,
-                new DialogueMove<object>(type)
+                DialogueMoves.Create(type)
             );
         }
         /// <summary>
@@ -51,7 +51,7 @@ namespace rharel.M3PD.Expectations.Arrangement
         {
             return new DialogueEvent(
                 source,
-                new DialogueMove<T>(type, properties)
+                DialogueMoves.Create(type, properties)
             );
         }
     }

@@ -8,7 +8,7 @@ namespace rharel.M3PD.Agency.Modules
     /// Represents the perceived event of a dialogue move having been fully 
     /// realized.
     /// </summary>
-    public struct DialogueEvent
+    public sealed class DialogueEvent
     {
         /// <summary>
         /// Creates a new event.
@@ -18,14 +18,21 @@ namespace rharel.M3PD.Agency.Modules
         /// </param>
         /// <param name="move">The move that was realized.</param>
         /// <exception cref="ArgumentNullException">
-        /// When either <paramref name="source_id"/> or 
-        /// <paramref name="move"/> is null.
+        /// When <paramref name="source_id"/> is null.
+        /// When <paramref name="move"/> is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// When <paramref name="source_id"/> is blank.
         /// </exception>
         public DialogueEvent(string source_id, DialogueMove move)
         {
             if (source_id == null)
             {
                 throw new ArgumentNullException(nameof(source_id));
+            }
+            if (source_id.Trim().Length == 0)
+            {
+                throw new ArgumentException(nameof(source_id));
             }
             if (move == null)
             {
@@ -38,12 +45,12 @@ namespace rharel.M3PD.Agency.Modules
         /// <summary>
         /// Gets the identifier of the agent who realized the move.
         /// </summary>
-        public string SourceID { get; private set; }
+        public string SourceID { get; }
 
         /// <summary>
         /// Gets the realized move.
         /// </summary>
-        public DialogueMove Move { get; private set; }
+        public DialogueMove Move { get; }
 
         /// <summary>
         /// Determines whether the specified object is equal to this instance.
@@ -86,7 +93,7 @@ namespace rharel.M3PD.Agency.Modules
         public override string ToString()
         {
             return $"{nameof(DialogueEvent)}{{ " +
-                   $"{nameof(SourceID)} = {SourceID}, " +
+                   $"{nameof(SourceID)} = '{SourceID}', " +
                    $"{nameof(Move)} = {Move} }}";
         }
     }

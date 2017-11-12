@@ -3,6 +3,7 @@ using rharel.M3PD.Agency.Dialogue_Moves;
 using rharel.M3PD.Agency.Modules;
 using rharel.M3PD.Agency.State;
 using System;
+using static rharel.Functional.Option;
 
 namespace rharel.M3PD.Agency.System
 {
@@ -52,7 +53,7 @@ namespace rharel.M3PD.Agency.System
         /// <see cref="None{DialogueMove}"/>.
         /// </remarks>
         public Optional<DialogueMove> RecentMove { get; private set; } = (
-            new Some<DialogueMove>(Idle.Instance)
+            Some<DialogueMove>(Idle.Instance)
         );
         /// <summary>
         /// Gets the target dialogue move.
@@ -107,10 +108,10 @@ namespace rharel.M3PD.Agency.System
             );
             if (realization_status == RealizationStatus.Complete)
             {
-                RecentMove = new Some<DialogueMove>(actual_move);
+                RecentMove = Some(actual_move);
                 IsActive = false;
             }
-            else { RecentMove = new None<DialogueMove>(); }
+            else { RecentMove = None<DialogueMove>(); }
         }
 
         /// <summary>

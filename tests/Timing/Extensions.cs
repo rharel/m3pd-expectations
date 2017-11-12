@@ -1,5 +1,4 @@
 ﻿using NUnit.Framework;
-using rharel.Functional;
 using rharel.M3PD.Common.Delegates;
 using System;
 using System.Collections.Generic;
@@ -23,7 +22,7 @@ namespace rharel.M3PD.Expectations.Timing.Tests
         {
             var rules = new List<SocialRule<int>>();
 
-            Assert.IsFalse(rules.EvaluateFor(ID).IsSome());
+            Assert.IsFalse(rules.EvaluateFor(ID).IsSome);
         }
         [Test]
         public void Test_EvaluateFor_WithIrrelevantRules()
@@ -36,7 +35,7 @@ namespace rharel.M3PD.Expectations.Timing.Tests
             );
             var rules = new List<SocialRule<int>> { rule };
 
-            Assert.IsFalse(rules.EvaluateFor(ID).IsSome());
+            Assert.IsFalse(rules.EvaluateFor(ID).IsSome);
         }
         [Test]
         public void Test_EvaluateFor_WithUnaffectedAgents()
@@ -49,7 +48,7 @@ namespace rharel.M3PD.Expectations.Timing.Tests
             );
             var rules = new List<SocialRule<int>> { rule };
 
-            Assert.IsFalse(rules.EvaluateFor(ID).IsSome());
+            Assert.IsFalse(rules.EvaluateFor(ID).IsSome);
         }
         [Test]
         public void Test_EvaluateFor_WithCompetingRules()

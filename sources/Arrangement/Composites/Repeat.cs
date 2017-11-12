@@ -2,6 +2,7 @@
 using rharel.M3PD.Agency.Modules;
 using System;
 using System.Collections.Generic;
+using static rharel.Functional.Option;
 
 namespace rharel.M3PD.Expectations.Arrangement
 {
@@ -46,11 +47,11 @@ namespace rharel.M3PD.Expectations.Arrangement
             {
                 if (IsResolved)
                 {
-                    return new None<int>();
+                    return None<int>();
                 }
                 else
                 {
-                    return new Some<int>(0);
+                    return Some(0);
                 }
             }
         }

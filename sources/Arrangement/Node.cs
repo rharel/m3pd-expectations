@@ -4,6 +4,7 @@ using rharel.M3PD.Common.Collections;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using static rharel.Functional.Option;
 
 namespace rharel.M3PD.Expectations.Arrangement
 {
@@ -90,7 +91,7 @@ namespace rharel.M3PD.Expectations.Arrangement
         /// Gets the index of this node's scope carrier child (if it has any).
         /// </summary>
         public virtual Optional<int> ScopeCarrierIndex
-            { get; protected set; } = new None<int>();
+            { get; protected set; } = None<int>();
         
         /// <summary>
         /// Gets this node's resolution status.
