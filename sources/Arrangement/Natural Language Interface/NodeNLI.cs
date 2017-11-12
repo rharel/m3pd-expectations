@@ -1,4 +1,5 @@
 ﻿using rharel.Debug;
+using rharel.M3PD.Agency.Dialogue_Moves;
 using rharel.M3PD.Agency.Modules;
 using rharel.M3PD.Common.Collections;
 using rharel.M3PD.Common.Delegates;
@@ -50,16 +51,34 @@ namespace rharel.M3PD.Expectations.Arrangement
         /// Expects a specified event indefinitely.
         /// </summary>
         /// <param name="event">The expected event.</param>
-        /// <param name="id">The node's identifier.</param>
         /// <returns>A new expectation node.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// When <paramref name="event"/> is null.
+        /// </exception>
+        public IndefiniteEvent IndefiniteEvent(DialogueEvent @event)
+        {
+            string id = ProcessNewNode(typeof(IndefiniteEvent), null);
+            return new IndefiniteEvent(id, @event);
+        }
+        /// <summary>
+        /// Expects a specified event indefinitely.
+        /// </summary>
+        /// <param name="source">
+        /// The identifier of the agent who realized the move.
+        /// </param>
+        /// <param name="move">The move that was realized.</param>
+        /// <exception cref="ArgumentNullException">
+        /// When <paramref name="source"/> is null.
+        /// When <paramref name="move"/> is null.
+        /// </exception>
         /// <exception cref="ArgumentException">
-        /// When <paramref name="id"/> is blank or already taken.
+        /// When <paramref name="source"/> is blank.
         /// </exception>
         public IndefiniteEvent IndefiniteEvent(
-            DialogueEvent @event, string id = null)
+            string source, DialogueMove move)
         {
-            id = ProcessNewNode(typeof(IndefiniteEvent), id);
-            return new IndefiniteEvent(id, @event);
+            var @event = new DialogueEvent(source, move);
+            return IndefiniteEvent(@event);
         }
 
         /// <summary>
@@ -68,19 +87,14 @@ namespace rharel.M3PD.Expectations.Arrangement
         /// </summary>
         /// <param name="condition">The condition to apply.</param>
         /// <param name="body">The node's only child.</param>
-        /// <param name="id">The node's identifier.</param>
         /// <returns>A new expectation node.</returns>
         /// <exception cref="ArgumentNullException">
         /// When either <paramref name="body"/> or 
         /// <paramref name="condition"/> is null.
         /// </exception>
-        /// <exception cref="ArgumentException">
-        /// When <paramref name="id"/> is blank or already taken.
-        /// </exception>
-        public Conditional Conditional(
-            Predicate condition, Node body, string id = null)
+        public Conditional Conditional(Predicate condition, Node body)
         {
-            id = ProcessNewNode(typeof(Conditional), id);
+            string id = ProcessNewNode(typeof(Conditional), null);
             return new Conditional(id, body, condition);
         }
 
@@ -149,17 +163,13 @@ namespace rharel.M3PD.Expectations.Arrangement
         /// Expects to repeatedly satisfy a specified child.
         /// </summary>
         /// <param name="body">The node's only child.</param>
-        /// <param name="id">The node's identifier.</param>
         /// <returns>A new expectation node.</returns>
         /// <exception cref="ArgumentNullException">
         /// When <paramref name="body"/> is null.
         /// </exception>
-        /// <exception cref="ArgumentException">
-        /// When <paramref name="id"/> is blank or already taken.
-        /// </exception>
-        public Repeat Repeat(Node body, string id = null)
+        public Repeat Repeat(Node body)
         {
-            id = ProcessNewNode(typeof(Repeat), id);
+            string id = ProcessNewNode(typeof(Repeat), null);
             return new Repeat(id, body);
         }
 
@@ -228,18 +238,39 @@ namespace rharel.M3PD.Expectations.Arrangement
         /// Expects a specified event indefinitely.
         /// </summary>
         /// <param name="event">The expected event.</param>
-        /// <param name="id">The node's identifier.</param>
         /// <returns>An indefinite event expectation.</returns>
-        /// <exception cref="ArgumentException">
-        /// When <paramref name="id"/> is blank or already taken.
+        /// <exception cref="ArgumentNullException">
+        /// When <paramref name="event"/> is null.
         /// </exception>
         /// <remarks>
         /// This is an alias for 
-        /// <see cref="IndefiniteEvent(DialogueEvent, string)"/>.
+        /// <see cref="IndefiniteEvent(DialogueEvent)"/>.
         /// </remarks>
-        public IndefiniteEvent Event(DialogueEvent @event, string id = null)
+        public IndefiniteEvent Event(DialogueEvent @event)
         {
-            return IndefiniteEvent(@event, id);
+            return IndefiniteEvent(@event);
+        }
+        /// <summary>
+        /// Expects a specified event indefinitely.
+        /// </summary>
+        /// <param name="source">
+        /// The identifier of the agent who realized the move.
+        /// </param>
+        /// <param name="move">The move that was realized.</param>
+        /// <exception cref="ArgumentNullException">
+        /// When <paramref name="source"/> is null.
+        /// When <paramref name="move"/> is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// When <paramref name="source"/> is blank.
+        /// </exception>
+        /// <remarks>
+        /// This is an alias for 
+        /// <see cref="IndefiniteEvent(string, DialogueMove)"/>.
+        /// </remarks>
+        public IndefiniteEvent Event(string source, DialogueMove move)
+        {
+            return IndefiniteEvent(source, move);
         }
         /// <summary>
         /// Expects to satisfy a specified child only while a specified 
@@ -247,22 +278,18 @@ namespace rharel.M3PD.Expectations.Arrangement
         /// </summary>
         /// <param name="condition">The condition to apply.</param>
         /// <param name="body">The node's only child.</param>
-        /// <param name="id">The node's identifier.</param>
         /// <returns>A conditional expectation.</returns>
         /// <exception cref="ArgumentNullException">
         /// When either <paramref name="body"/> or 
         /// <paramref name="condition"/> is null.
         /// </exception>
-        /// <exception cref="ArgumentException">
-        /// When <paramref name="id"/> is blank or already taken.
-        /// </exception>
         /// <remarks>
         /// This is an alias for 
-        /// <see cref="Conditional(Node, Predicate, string)"/>.
+        /// <see cref="Conditional(Node, Predicate)"/>.
         /// </remarks>
-        public Conditional If(Predicate condition, Node body, string id = null)
+        public Conditional If(Predicate condition, Node body)
         {
-            return Conditional(condition, body, id);
+            return Conditional(condition, body);
         }
         /// <summary>
         /// Expects to satisfy exactly one child. The child selected to be the 

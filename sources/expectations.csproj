@@ -51,7 +51,7 @@
     <Compile Include="Arrangement\Composites\Divergence.cs" />
     <Compile Include="Arrangement\Composites\Repeat.cs" />
     <Compile Include="Arrangement\Composites\Sequence.cs" />
-    <Compile Include="Arrangement\Natural Language Interface\DialogueEventNLI.cs" />
+    <Compile Include="Arrangement\Natural Language Interface\DialogueMoveNLI.cs" />
     <Compile Include="Arrangement\Natural Language Interface\NodeNLI.cs" />
     <Compile Include="Arrangement\Node.cs" />
     <Compile Include="Arrangement\Resolution.cs" />
