@@ -127,9 +127,39 @@ namespace rharel.M3PD.Expectations.Arrangement
         /// When <paramref name="type"/> is blank.
         /// </exception>
         public static Builder<T> Move<T>(
+            string addressee = null, 
+            string type = null) 
+            where T: new()
+        {
+            return Move(type, addressee, new T());
+        }
+        /// <summary>
+        /// Creates a new non-generic builder for a move of the specified type.
+        /// </summary>
+        /// <param name="type">The move's type identifier.</param>
+        /// <returns>A new move.</returns>
+        /// <exception cref="ArgumentException">
+        /// When <paramref name="type"/> is blank.
+        /// </exception>
+        public static Builder<T> Move<T>(
+            T properties,
             string addressee = null,
-            T properties = default(T),
             string type = null)
+        {
+            return Move(type, addressee, properties);
+        }
+        /// <summary>
+        /// Creates a new non-generic builder for a move of the specified type.
+        /// </summary>
+        /// <param name="type">The move's type identifier.</param>
+        /// <returns>A new move.</returns>
+        /// <exception cref="ArgumentException">
+        /// When <paramref name="type"/> is blank.
+        /// </exception>
+        private static Builder<T> Move<T>(
+            string type,
+            string addressee,
+            T properties)
         {
             if (type == null) { type = typeof(T).Name; }
 
