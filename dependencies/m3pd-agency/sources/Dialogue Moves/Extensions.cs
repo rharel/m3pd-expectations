@@ -21,12 +21,10 @@ namespace rharel.M3PD.Agency.Dialogue_Moves
             return move.Equals(Idle.Instance);
         }
         /// <summary>
-        /// Determines whether the specified move is the idle move.
+        /// Gets the identifier of a single-addressee move.
         /// </summary>
-        /// <param name="move">The move to test.</param>
-        /// <returns>
-        /// True iff <paramref name="move"/> equals <see cref="Idle.Instance"/>.
-        /// </returns>
+        /// <param name="move">The move to get from.</param>
+        /// <returns>An optional identifier.</returns>
         public static Optional<string> GetAddressee(this DialogueMove move)
         {
             if (move.AddresseeIDs.Count == 1)
