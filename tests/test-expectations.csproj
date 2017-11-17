@@ -64,7 +64,7 @@
     <Compile Include="Arrangement\Atomics\IndefiniteEventTest.cs" />
     <Compile Include="Arrangement\Composites\ConditionalTest.cs" />
     <Compile Include="Arrangement\Composites\DivergenceTest.cs" />
-    <Compile Include="Arrangement\Composites\RepeatTest.cs" />
+    <Compile Include="Arrangement\Composites\RepetitionTest.cs" />
     <Compile Include="Arrangement\Composites\DisjunctionTest.cs" />
     <Compile Include="Arrangement\Composites\ConjunctionTest.cs" />
     <Compile Include="Arrangement\Composites\SequenceTest.cs" />

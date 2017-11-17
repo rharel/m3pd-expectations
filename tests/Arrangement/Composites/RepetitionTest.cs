@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace rharel.M3PD.Expectations.Arrangement.Tests
 {
     [TestFixture]
-    public sealed class RepeatTest
+    public sealed class RepetitionTest
     {
         private static readonly string ID = "event id";
         private static readonly MockNode BODY = new MockNode("body");
@@ -16,7 +16,7 @@ namespace rharel.M3PD.Expectations.Arrangement.Tests
             new DialogueEvent("source id", new Mock<DialogueMove>().Object)
         );
 
-        private Repeat _node;
+        private Repetition _node;
 
         [SetUp]
         public void Setup()
@@ -24,14 +24,14 @@ namespace rharel.M3PD.Expectations.Arrangement.Tests
             BODY.Reset();
             BODY.ResetMock();
 
-            _node = new Repeat(ID, BODY);
+            _node = new Repetition(ID, BODY);
         }
 
         [Test]
         public void Test_Constructor_WithInvalidArgs()
         {
             Assert.Throws<ArgumentNullException>(
-                () => new Repeat(ID, null)
+                () => new Repetition(ID, null)
             );
         }
 
